@@ -40,4 +40,5 @@ Route::prefix('person')->middleware('auth:api')->group(function(){
 
 Route::prefix('follow')->middleware('auth:api')->group(function(){
     Route::post('person/{personId}', [\App\Http\Controllers\Follow\PersoFollowController::class, 'follow']);
+    Route::post('page/{pageId}', [\App\Http\Controllers\Follow\PageFollowController::class, 'follow']);
 });
