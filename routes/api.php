@@ -22,3 +22,7 @@ Route::prefix('auth')->group(function(){
     Route::post('register', [\App\Http\Controllers\Auth\UserRegisterController::class, 'register']);
     Route::post('login', [\App\Http\Controllers\Auth\UserLoginController::class, 'attempt']);
 });
+
+Route::prefix('page')->middleware('auth:api')->group(function(){
+    Route::post('create', [App\Http\Controllers\PageController::class, 'create']);
+});
