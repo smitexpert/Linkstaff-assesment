@@ -6,7 +6,7 @@ use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
 
 class PageService {
-    public function createPage($request)
+    public function createPage($request): Page
     {
         $page = Page::create([
             'page_name' => $request->page_name,

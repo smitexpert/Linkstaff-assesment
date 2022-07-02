@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class UserRegisterController extends Controller
 {
-    public function register(UserRegisterRequest $request, UserRegisterService $userRegisterService)
+    public function register(UserRegisterRequest $request, UserRegisterService $userRegisterService): Object
     {
         $user = $userRegisterService->create($request);
         return response()->json($user, 200);

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class UserLoginController extends Controller
 {
-    public function attempt(UserLoginRequest $request, UserLoginService $userLoginService)
+    public function attempt(UserLoginRequest $request, UserLoginService $userLoginService): Object
     {
         $auth = $userLoginService->attempt($request);
 

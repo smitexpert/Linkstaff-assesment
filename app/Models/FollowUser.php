@@ -5,14 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class FollowUser extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['page_name', 'user_id'];
+    protected $fillable = [
+        'user_id',
+        'follow_id',
+    ];
 
     public function posts()
     {
-        return $this->hasMany(Post::class, 'page_id', 'id');
+        return $this->hasMany(UserPost::class, 'id', 'user_id');
     }
 }

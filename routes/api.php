@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\Page;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,4 +29,15 @@ Route::prefix('auth')->group(function(){
 Route::prefix('page')->middleware('auth:api')->group(function(){
     Route::post('create', [App\Http\Controllers\PageController::class, 'create']);
     Route::post('{pageId}/attach-post', [\App\Http\Controllers\PageController::class, 'attachPost']);
+});
+
+
+Route::prefix('person')->middleware('auth:api')->group(function(){
+    Route::post('attach-post', [App\Http\Controllers\UserPostController::class, 'create']);
+    Route::get('feed', [\App\Http\Controllers\PersonFeedController::class, 'feed']);
+});
+
+
+Route::prefix('follow')->middleware('auth:api')->group(function(){
+    Route::post('person/{personId}', [\App\Http\Controllers\Follow\PersoFollowController::class, 'follow']);
 });

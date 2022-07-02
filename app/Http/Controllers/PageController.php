@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Gate;
 
 class PageController extends Controller
 {
-    public function create(PageCreateRequest $request, PageService $pageService)
+    public function create(PageCreateRequest $request, PageService $pageService): Object
     {
         $page = $pageService->createPage($request);
 
         return response()->json($page, 200);
     }
 
-    public function attachPost(CreatePostRequest $request, PostService $postService, $pageId)
+    public function attachPost(CreatePostRequest $request, PostService $postService, $pageId): Object
     {
         $page = Page::find($pageId);
         if(!$page) {

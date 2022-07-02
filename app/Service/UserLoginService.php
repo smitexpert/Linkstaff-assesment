@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class UserLoginService {
-    public function attempt($request)
+    public function attempt($request): Array
     {
         if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return false;
