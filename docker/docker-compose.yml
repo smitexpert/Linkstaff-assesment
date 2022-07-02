@@ -1,0 +1,66 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: ./php/
+      dockerfile: Dockerfile
+    image: laravel-php7.4-image
+    container_name: linkstaff-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./../:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - linkstaff-app-network
+
+  db:
+    image: mysql:5.7
+    container_name: linkstaff-db
+    restart: unless-stopped
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_DATABASE: linkstaff-app
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_USER: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./mysql/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
+    depends_on:
+      - app
+    networks:
+      - linkstaff-app-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: linkstaff-nginx
+    restart: unless-stopped
+    ports:
+      - 88:80
+    volumes:
+      - ./../:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - app
+    networks:
+      - linkstaff-app-network
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: linkstaff-phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PASSWORD=root
+    networks:
+      - linkstaff-app-network
+
+networks:
+  linkstaff-app-network:
+    driver: bridge
