@@ -16,6 +16,7 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->string('page_name');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

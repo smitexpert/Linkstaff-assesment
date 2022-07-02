@@ -25,4 +25,5 @@ Route::prefix('auth')->group(function(){
 
 Route::prefix('page')->middleware('auth:api')->group(function(){
     Route::post('create', [App\Http\Controllers\PageController::class, 'create']);
+    Route::post('{pageId}/attach-post', [\App\Http\Controllers\PageController::class, 'attachPost']);
 });

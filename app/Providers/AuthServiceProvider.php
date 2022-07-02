@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Policies\CreatePostPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -25,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::define('create-post', [CreatePostPolicy::class, 'create']);
 
         if (! $this->app->routesAreCached()) {
             Passport::routes();
